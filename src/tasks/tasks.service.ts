@@ -57,21 +57,9 @@ export class TasksService {
   }
 
   async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
-    try{
-    // const accountSid = 'AC807126ba4999f6fc308c1522bd2dcad7';
-    // const authToken = '189f9932ae8fc26a6c144521e99e0899';
-    // const client = require('twilio')(accountSid, authToken);
-
-    // client.messages
-    //   .create({
-    //     body: 'This is the ship that made the Kessel Run in fourteen parsecs?',
-    //     from: '+18174947659',
-    //     to: '+16045377659'
-    //   })
-    //   .then(message => console.log(message.sid));
-
-    return this.taskRepository.createTask(createTaskDto);
-    } catch(e){
+    try {
+      return this.taskRepository.createTask(createTaskDto);
+    } catch (e) {
       console.log(e);
     }
   }
