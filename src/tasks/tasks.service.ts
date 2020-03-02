@@ -5,6 +5,7 @@ import { Task } from './task.entity';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TaskStatus } from './task-status.enum';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
+import { User } from '../auth/user.entity';
 
 @Injectable()
 export class TasksService {
@@ -13,31 +14,11 @@ export class TasksService {
     private taskRepository: TaskRepository) { }
   // private tasks : Task[] = [];
 
-  async getTasks(filterDto: GetTasksFilterDto): Promise<Task[]> {
-    return this.taskRepository.getTasks(filterDto);
+  async getTasks(filterDto: GetTasksFilterDto,user: User): Promise<Task[]> {
+    return this.taskRepository.getTasks(filterDto, user);
 
   }
-
-  // getTasksWithFilters(filterDto: GetTasksFilterDto) : Task[] {
-  //     const {status, search} = filterDto;
-
-  //     let tasks = this.getAllTasks();
-
-  //     if(status){
-  //         tasks = tasks.filter(t => t.status === status);
-  //     }
-
-  //     if(search){
-  //         tasks = tasks.filter(t => t.title.includes(search) || t.description.includes(search));
-  //     }
-
-  //     return tasks;
-
-  // }
-  // getAllTasks(): Task[]{
-  //     return this.tasks;
-  // }
-  async getTaskById(id: number): Promise<Task> {
+  async getTaskById(id: number, user: User): Promise<Task> {
     const found = await this.taskRepository.findOne(id);
 
     if (!found) {
@@ -46,7 +27,7 @@ export class TasksService {
     return found;
   }
 
-  async deleteTaskById(id: number): Promise<void> {
+  async deleteTaskById(id: number,user: User): Promise<void> {
     // const found = await this.getTaskById(id);
     const result = await this.taskRepository.delete(id);
     if (result.affected === 0) {
@@ -56,16 +37,19 @@ export class TasksService {
 
   }
 
-  async createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+  async createTask(
+    createTaskDto: CreateTaskDto,
+    user: User
+  ): Promise<Task> {
     try {
-      return this.taskRepository.createTask(createTaskDto);
+      return this.taskRepository.createTask(createTaskDto,user);
     } catch (e) {
       console.log(e);
     }
   }
 
-  async updateTaskStatus(id: number, status: TaskStatus): Promise<Task> {
-    const task = await this.getTaskById(id);
+  async updateTaskStatus(id: number, status: TaskStatus,user: User): Promise<Task> {
+    const task = await this.getTaskById(id, user);
     task.status = status;
 
     await task.save();
