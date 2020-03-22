@@ -6,7 +6,7 @@ import { TaskStatusValidationPipe } from './pipes/task-status-validation.pipe';
 import { TaskStatus } from './task-status.enum';
 import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from 'src/auth/get-user.decorator';
+import { GetUser } from '../auth/get-user.decorator';
 import { User } from '../auth/user.entity';
 import {Logger} from '@nestjs/common';
 
