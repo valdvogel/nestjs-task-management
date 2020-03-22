@@ -8,17 +8,17 @@ import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from 'src/auth/get-user.decorator';
 import { User } from '../auth/user.entity';
+import {Logger} from '@nestjs/common';
 
 @Controller('tasks')
 @UseGuards(AuthGuard())
 export class TasksController {
+    private logger = new Logger('TaskController');
     constructor(private taskService: TasksService){}
-
     @Get()
     getTasks(
       @Query(ValidationPipe) filterDto: GetTasksFilterDto,
       @GetUser() user: User
-
     ): Promise<Task[]> {
         return this.taskService.getTasks(filterDto, user);
     }

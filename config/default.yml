@@ -1,0 +1,12 @@
+server:
+  port: 3000
+db:
+  type: 'mysql'
+  host: 'localhost'
+  port: 33061
+  database: 'taskmanagement'
+  password: '12345678'
+  syncronize: false
+jwt:
+  expireIn: 3600
+  secret: 'topSecret51'
